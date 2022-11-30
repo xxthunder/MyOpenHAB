@@ -1,0 +1,16 @@
+---
+- name: "Installation of Docker and Docker Compose"
+  hosts: localhost
+  connection: local
+  become: yes
+  vars:
+    pip_package: python3-pip
+    docker_install_recommends: true
+    docker_install_compose: true
+    docker_users:
+      - pi
+    pip_install_packages:
+      - docker
+  roles:
+    - geerlingguy.pip
+    - geerlingguy.docker_arm

@@ -32,9 +32,29 @@ sudo raspi-config
 * reboot
 * Pi should be running from sda1 (check with 'mount' or 'df -h')
 * During the next shutdown phase you can remove the SD card.
-* Install docker:
+
+## Ansible and Docker
+
+My goal was to automate any further installation and configuration. Ansible seems to be the right tool for that job.
+* Install Ansible:
 ```bash
-curl -sSL https://get.docker.com | sh
-sudo docker run hello-world
+sudo apt install ansible python3-docker
+ansible-galaxy install geerlingguy.docker_arm geerlingguy.pip
+ansible-playbook docker.yml
+```
+* Reboot:
+```bash
+sudo reboot
+```
+* Check Docker:
+```bash
+docker ps
+docker run hello-world
 ```
 * You should get a message about successful creation of a hello-world container.
+
+## Sources, References and Ideas
+
+* https://www.rs-online.com/designspark/raspberry-pi-4-personal-datacentre-part-1-ansible-docker-and-nextcloud
+* https://github.com/geerlingguy/ansible-role-docker_arm
+* https://www.laub-home.de/wiki/Raspberry_Pi_mit_Raspbian_und_Docker
