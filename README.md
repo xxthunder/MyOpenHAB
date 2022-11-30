@@ -55,6 +55,7 @@ docker run hello-world
 
 ## Sources, References and Ideas
 
+* https://github.com/fex01/ansible-openhabserver
 * https://www.rs-online.com/designspark/raspberry-pi-4-personal-datacentre-part-1-ansible-docker-and-nextcloud
 * https://github.com/geerlingguy/ansible-role-docker_arm
 * https://www.laub-home.de/wiki/Raspberry_Pi_mit_Raspbian_und_Docker
