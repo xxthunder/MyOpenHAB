@@ -1,9 +1,0 @@
----
-- name: "Just a simple test for becoming root"
-  hosts: localhost
-  become: yes
-  tasks:
-    - name: "sudo to root"
-      command: /usr/bin/whoami
-      register: out
-    - debug: var=out.stdout_lines

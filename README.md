@@ -19,6 +19,7 @@
 * use command 'sudo raspi-config' to configure the hostname to your needs.
 * For robustness I choose a SSD SATA disk to boot from. To configure this do the following steps:
 ```bash
+sudo apt install git
 git clone https://github.com/billw2/rpi-clone.git
 cd rpi-clone
 sudo cp rpi-clone rpi-clone-setup /usr/local/sbin
@@ -38,9 +39,11 @@ sudo raspi-config
 My goal was to automate any further installation and configuration. Ansible seems to be the right tool for that job.
 * Install Ansible:
 ```bash
-sudo apt install ansible python3-docker
-ansible-galaxy install geerlingguy.docker_arm geerlingguy.pip
-ansible-playbook docker.yml
+sudo apt install ansible python3-docker build-essential cargo python3-pip
+```
+* Run Ansible:
+```
+ansible-playbook docker.yml --extra-vars "piuser=<your pi user's id>"
 ```
 * Reboot:
 ```bash

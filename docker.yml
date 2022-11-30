@@ -1,16 +1,32 @@
----
-- name: "Installation of Docker and Docker Compose"
-  hosts: localhost
-  connection: local
+- hosts: all
   become: yes
-  vars:
-    pip_package: python3-pip
-    docker_install_recommends: true
-    docker_install_compose: true
-    docker_users:
-      - pi
-    pip_install_packages:
-      - docker
-  roles:
-    - geerlingguy.pip
-    - geerlingguy.docker_arm
+  tasks:
+    - name: Install prerequisites for docker
+      apt:
+        name:
+          - libffi-dev
+          - libssl-dev
+          - python3
+          - python3-pip
+        update_cache: yes
+        state: present
+    - name: Remove python-configparser package
+      apt:
+        name: python-configparser
+        state: absent
+    - name: get docker convenience script
+      shell: curl -fsSL https://get.docker.com -o get-docker.sh
+      args:
+        creates: /home/{{ piuser }}/get-docker.sh
+    - name: install docker
+      shell: sh /home/{{ piuser }}/get-docker.sh
+      args:
+        creates: /usr/bin/docker
+    - name: make pi user execute docker commands
+      shell: usermod -aG docker {{ piuser }}
+    - name: Install docker compose
+      apt:
+        name:
+          - docker-compose-plugin
+        update_cache: yes
+        state: present

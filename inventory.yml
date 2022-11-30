@@ -1,0 +1,4 @@
+openhabs:
+  hosts:
+    openhab01:
+      ansible_host: localhost
