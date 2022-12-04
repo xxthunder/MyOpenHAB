@@ -1,0 +1,43 @@
+---
+# tasks file for roles/docker
+
+- name: Install prerequisites for docker
+  apt:
+    name:
+      - libffi-dev
+      - libssl-dev
+      - python3
+      - python3-pip
+    update_cache: yes
+    state: present
+  become: True
+
+- name: Remove python-configparser package
+  apt:
+    name: python-configparser
+    state: absent
+  become: True
+
+- name: get docker installer script
+  ansible.builtin.get_url:
+    url: https://get.docker.com
+    dest: /etc/get-docker.sh
+    mode: '0664'
+  become: True
+
+- name: install docker
+  shell: sh /etc/get-docker.sh
+  args:
+    creates: /usr/bin/docker
+  become: True
+
+- name: make pi user execute docker commands
+  shell: usermod -aG docker {{ piuser }}
+  become: True
+
+- name: Install docker compose
+  apt:
+    name:
+      - docker-compose-plugin
+    update_cache: yes
+    state: present

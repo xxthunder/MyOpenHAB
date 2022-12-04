@@ -43,7 +43,7 @@ sudo apt install ansible python3-docker build-essential cargo python3-pip
 ```
 * Run Ansible:
 ```
-ansible-playbook docker.yml --extra-vars "piuser=<your pi user's id>"
+ansible-playbook main.yml --extra-vars "piuser=<your pi user's id>"
 ```
 * Reboot:
 ```bash
@@ -60,5 +60,4 @@ docker run hello-world
 
 * https://github.com/fex01/ansible-openhabserver
 * https://www.rs-online.com/designspark/raspberry-pi-4-personal-datacentre-part-1-ansible-docker-and-nextcloud
-* https://github.com/geerlingguy/ansible-role-docker_arm
 * https://www.laub-home.de/wiki/Raspberry_Pi_mit_Raspbian_und_Docker
