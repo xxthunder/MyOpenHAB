@@ -19,7 +19,7 @@
   become: True
 
 - name: get docker installer script
-  ansible.builtin.get_url:
+  get_url:
     url: https://get.docker.com
     dest: /etc/get-docker.sh
     mode: '0664'

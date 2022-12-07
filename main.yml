@@ -6,8 +6,6 @@
   tasks:
     - include_role: 
         name: roles/docker
-#    - name: reboot host
-#      reboot:
     - include_role: 
         name: roles/openhab
       vars:
