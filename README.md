@@ -12,38 +12,36 @@
 
 ## Initial Commissioning
 
-* Follow the [official description](https://www.raspberrypi.com/software/) to get Raspberry OS Lite onto a SD card.
-* Put an empty file with name 'ssh' on the boot partition.
-* Boot the Raspberry Pi.
-* Login via ssh.
-* use command 'sudo raspi-config' to configure the hostname to your needs.
-* For robustness I choose a SSD SATA disk to boot from. To configure this do the following steps:
-```bash
-sudo apt install git
-git clone https://github.com/billw2/rpi-clone.git
-cd rpi-clone
-sudo cp rpi-clone rpi-clone-setup /usr/local/sbin
-sudo rpi-clone sda
-sudo raspi-config
-```
-* Inside raspi-config:
-   * 8 Update
-   * 6 (Advanced Options) &rarr; A7(Bootloader Version) &rarr; E2(Default)
-   * 6 (Advanced Options) &rarr; A6(BootOrder) &rarr; B2(USB Boot)
-* reboot
+* Follow the [official description](https://www.raspberrypi.com/software/) to get Raspberry OS Lite onto an SD card and configure it according to your needs (user account, ssh, WiFi, etc.)
+* Boot the Raspberry Pi and login.
+* For robustness I choose a SSD SATA disk with an USB 3.0 adapter to boot from. Therefore the following steps are necessary:
+   * Start raspi-config: 
+   ```bash
+   sudo raspi-config
+   ```
+   * Inside raspi-config:
+      * 8 Update
+      * 6 (Advanced Options) &rarr; A7(Bootloader Version) &rarr; E2(Default)
+      * 6 (Advanced Options) &rarr; A6(BootOrder) &rarr; B2(USB Boot)
+* Get Raspberry OS Lite onto the SSD.
+* Connect SSD and reboot.
 * Pi should be running from sda1 (check with 'mount' or 'df -h')
 * During the next shutdown phase you can remove the SD card.
 
 ## Ansible and Docker
 
 My goal was to automate any further installation and configuration. Ansible seems to be the right tool for that job.
-* Install Ansible:
+* Install Ansible on your control host. I use the Pi itself for this, so I need these packages:
 ```bash
-sudo apt install ansible python3-docker build-essential cargo python3-pip
+sudo apt update
+sudo apt upgrade
+sudo apt install ansible git python3-docker build-essential cargo python3-pip
+sudo reboot
 ```
-* Run Ansible:
+* Run playbooks of this repo:
 ```
-ansible-playbook main.yml --extra-vars "piuser=<your pi user's id>"
+git clone https://github.com/xxthunder/MyOpenHAB.git
+ansible-playbook main.yml --extra-vars "piuser=$USER"
 ```
 * Reboot:
 ```bash
@@ -58,6 +56,6 @@ docker run hello-world
 
 ## Sources, References and Ideas
 
+* https://community.openhab.org/t/ansible-revisited/105754
 * https://github.com/fex01/ansible-openhabserver
-* https://www.rs-online.com/designspark/raspberry-pi-4-personal-datacentre-part-1-ansible-docker-and-nextcloud
 * https://www.laub-home.de/wiki/Raspberry_Pi_mit_Raspbian_und_Docker
