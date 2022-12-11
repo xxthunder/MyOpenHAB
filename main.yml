@@ -4,9 +4,11 @@
   hosts: openhabs
   become: true
   tasks:
-    - include_role: 
+    - include_role:
         name: roles/docker
-    - include_role: 
+    - include_role:
         name: roles/openhab
       vars:
         system_user: "{{ piuser }}"
+    - include_role:
+        name: roles/frontail
