@@ -22,7 +22,7 @@
   get_url:
     url: https://get.docker.com
     dest: /etc/get-docker.sh
-    mode: '0664'
+    mode: "0664"
   become: True
 
 - name: install docker
@@ -31,8 +31,11 @@
     creates: /usr/bin/docker
   become: True
 
-- name: make pi user execute docker commands
-  shell: usermod -aG docker {{ piuser }}
+- name: add {{ piuser }} to group docker for execution of docker commands
+  user:
+    name: "{{ piuser }}"
+    groups: docker
+    append: yes
   become: True
 
 - name: Install docker compose
