@@ -1,0 +1,11 @@
+---
+# tasks file for init-rpi
+
+- name: Install prerequisites for ntp
+  apt:
+    name:
+      - ntp
+      - ntpstat
+    update_cache: yes
+    state: present
+  become: True

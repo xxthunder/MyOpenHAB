@@ -5,6 +5,8 @@
   become: true
   tasks:
     - include_role:
+        name: roles/init-rpi
+    - include_role:
         name: roles/docker
     - include_role:
         name: roles/openhab
