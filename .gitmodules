@@ -1,3 +1,6 @@
 [submodule "roles/openhab"]
 	path = roles/openhab
 	url = git@github.com:xxthunder/ansible-openhab.git
+[submodule "roles/docker"]
+	path = roles/docker
+	url = git@github.com:xxthunder/ansible-docker.git
