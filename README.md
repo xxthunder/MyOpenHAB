@@ -1,5 +1,9 @@
 # MyOpenHAB
 
+## Goal
+
+* OpenHAB running on a Raspberry Pi 4 as a docker container
+* Automated installation out of this repository
 ## Parts list
 
 ![](images/parts.png)
@@ -8,25 +12,32 @@
 * Raspberry 4596 Pi - official power supply for Raspberry Pi 4 Model B, USB-C, 5.1V, 3A
 * RPI CASE ALU08 (got it from [here](https://www.reichelt.de/de/de/gehaeuse-fuer-raspberry-pi-4-alu-schwarz-rpi-case-alu08-p272360.html?r=1))
 * JSAUX USB 3.0 SATA Adapter (got it from [here](https://www.amazon.de/dp/B086W944YT/ref=cm_sw_r_awdo_navT_g_J4W8QZW49ZTRPVYGJE9D), found it on this [list](https://forum-raspberrypi.de/forum/thread/47876-magische-usb-sata-adapter-und-wo-sie-zu-finden-sind/))
-* Some SATA SSD disk (e.g. 128 GBytes)
+* Some Micro SD card
+* Some SATA SSD disk, e.g. 128 GBytes (optional in case of booting from USB)
 
 ## Initial Commissioning
 
-* Follow the [official description](https://www.raspberrypi.com/software/) to get Raspberry OS Lite onto an SD card and configure it according to your needs (user account, ssh, WiFi, etc.)
+* Follow the [official description](https://www.raspberrypi.com/software/) to get Raspberry OS Lite onto the SD card and configure it according to your needs (user account, ssh, WiFi, etc.)
 * Boot the Raspberry Pi and login.
+
+## Boot from SSD disk (Optional step)
+
 * For robustness I choose a SSD SATA disk with an USB 3.0 adapter to boot from. Therefore the following steps are necessary:
-   * Start raspi-config: 
-   ```bash
-   sudo raspi-config
-   ```
-   * Inside raspi-config:
-      * 8 Update
-      * 6 (Advanced Options) &rarr; A7(Bootloader Version) &rarr; E2(Default)
-      * 6 (Advanced Options) &rarr; A6(BootOrder) &rarr; B2(USB Boot)
-* Get Raspberry OS Lite onto the SSD.
-* Connect SSD and reboot.
-* Pi should be running from sda1 (check with 'mount' or 'df -h')
-* During the next shutdown phase you can remove the SD card.
+  * Start raspi-config: 
+  ```bash
+  sudo raspi-config
+  ```
+  * Inside raspi-config:
+    * 8 Update
+    * 6 (Advanced Options) &rarr; A7(Bootloader Version) &rarr; E2(Default)
+    * 6 (Advanced Options) &rarr; A6(BootOrder) &rarr; B2(USB Boot)
+  * Shutdown:
+  ```bash
+  sudo shutdown -h now
+  ```
+  * Remove SD card.
+  * Get Raspberry OS Lite onto the SSD (as before with the SD card).
+  * Connect SSD and boot.
 
 ## Ansible and Docker
 
@@ -38,21 +49,15 @@ sudo apt upgrade
 sudo apt install ansible git python3-docker build-essential cargo python3-pip
 sudo reboot
 ```
-* Run playbooks of this repo:
-```
-git clone https://github.com/xxthunder/MyOpenHAB.git
+* Run playbook of this repo to install openHAB:
+```bash
+git clone --recurse-submodules https://github.com/xxthunder/MyOpenHAB.git
+cd MyOpenHAB
 ansible-playbook main.yml --extra-vars "piuser=$USER"
 ```
-* Reboot:
-```bash
-sudo reboot
-```
-* Check Docker:
-```bash
-docker ps
-docker run hello-world
-```
-* You should get a message about successful creation of a hello-world container.
+* After successful installation openHAB incl. frontail services are running:
+  * http://myopenhab:8080/
+  * http://myopenhab:9001/
 
 ## Sources, References and Ideas
 
