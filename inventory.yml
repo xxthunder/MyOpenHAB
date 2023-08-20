@@ -1,4 +1,4 @@
-openhabs:
+all:
   hosts:
-    myopenhab:
-      ansible_host: myopenhab
+    localhost:
+      ansible_connection: local

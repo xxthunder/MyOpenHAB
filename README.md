@@ -2,8 +2,8 @@
 
 ## Goal
 
-* OpenHAB running on a Raspberry Pi 4 as a docker container
-* Automated installation out of this repository
+* Latest openHAB release running on a Raspberry Pi 4 as a docker container.
+* Automated installation out of this repository.
 ## Parts list
 
 ![](images/parts.png)
@@ -41,7 +41,7 @@
 
 ## Ansible and Docker
 
-My goal was to automate any further installation and configuration. Ansible seems to be the right tool for that job.
+My goal was to automate any further installation, configuration and updating. Ansible seems to be the right tool for that job.
 * Install Ansible on your control host. I use the Pi itself for this, so I need these packages:
 ```bash
 sudo apt update
@@ -49,15 +49,16 @@ sudo apt upgrade
 sudo apt install ansible git python3-docker build-essential cargo python3-pip
 sudo reboot
 ```
+* As I use the Pi itself as ansible control host the inventory.yml contains the localhost, only. If this setup does not fit to you, adjust the inventory according to your needs.
 * Run playbook of this repo to install openHAB:
 ```bash
-git clone --recurse-submodules https://github.com/xxthunder/MyOpenHAB.git
+git clone --recurse-submodules git@github.com:xxthunder/MyOpenHAB.git
 cd MyOpenHAB
 ansible-playbook main.yml --extra-vars "piuser=$USER"
 ```
 * After successful installation openHAB incl. frontail services are running:
-  * http://myopenhab:8080/
-  * http://myopenhab:9001/
+  * http://<your_pi_hostname>:8080/
+  * http://<your_pi_hostname>:9001/
 
 ## Sources, References and Ideas
 

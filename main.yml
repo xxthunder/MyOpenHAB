@@ -1,7 +1,7 @@
 # To be invoked with `ansible-playbook main.yml`
 
 - name: Set up OpenHAB on Raspberry OS (Bullseye)
-  hosts: openhabs
+  hosts: all
   become: true
   tasks:
     - include_role:
