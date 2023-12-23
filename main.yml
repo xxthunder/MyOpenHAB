@@ -12,6 +12,6 @@
         name: roles/openhab
       vars:
         system_user: "{{ piuser }}"
-        openhab_version: milestone
+        openhab_version: latest
     - include_role:
         name: roles/frontail
