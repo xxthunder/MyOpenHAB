@@ -12,6 +12,6 @@
         name: roles/openhab
       vars:
         system_user: "{{ piuser }}"
-        openhab_version: 4.2.2
+        openhab_version: 4.3.0
     - include_role:
         name: roles/frontail

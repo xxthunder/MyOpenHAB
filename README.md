@@ -4,6 +4,7 @@
 
 * Latest openHAB release running on a Raspberry Pi 4 as a docker container.
 * Automated installation out of this repository.
+
 ## Parts list
 
 ![](images/parts.png)
@@ -49,12 +50,14 @@ sudo apt upgrade
 sudo apt install ansible git python3-docker build-essential cargo python3-pip
 sudo reboot
 ```
-* As I use the Pi itself as ansible control host the inventory.yml contains the localhost, only. If this setup does not fit to you, adjust the inventory according to your needs.
-* Run playbook of this repo to install openHAB:
+* Clone this repo to install openHAB:
 ```bash
 git clone --recurse-submodules git@github.com:xxthunder/MyOpenHAB.git
 cd MyOpenHAB
-ansible-playbook main.yml --extra-vars "piuser=$USER"
+```
+* Adapt the inventory.yml file to your needs (hostname, piuser, etc.). The variable piuser defines the user running openHAB, in my case it is the default user created during disk creation above.
+```bash
+ansible-playbook main.yml"
 ```
 * After successful installation openHAB incl. frontail services are running:
   * http://<your_pi_hostname>:8080/

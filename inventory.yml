@@ -1,4 +1,6 @@
 all:
   hosts:
-    localhost:
-      ansible_connection: local
+    myopenhab:
+      ansible_user: xxx
+      ansible_connection: ssh
+      piuser: xxx
